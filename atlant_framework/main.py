@@ -1,5 +1,7 @@
+import datetime
 import quopri
 from .requests import GetRequest, PostRequest
+import json
 
 
 class PageNotFound404:
@@ -26,8 +28,13 @@ class Framework:
 
         if method == 'POST':
             data = PostRequest().get_request_params(environ)
-            request['data'] = data
-            print(f'Нам пришёл post-запрос: {Framework.decode_value(data)}')
+            request['data'] = Framework.decode_value(data)
+            print(f'Нам пришёл post-запрос: {data}')
+            f = open('post_req.txt', 'a')
+            for key, value in data.items():
+                f.write(f'{key} : {Framework.decode_value(value)}, ')
+            f.close()
+
         if method == 'GET':
             request_params = GetRequest().get_request_params(environ)
             request['request_params'] = request_params
@@ -37,6 +44,7 @@ class Framework:
             view = self.routes_lst[path]
         else:
             view = PageNotFound404()
+        request = {}
         for front in self.fronts_lst:
             front(request)
         code, body = view(request)

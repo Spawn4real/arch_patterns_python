@@ -8,9 +8,4 @@ class Home:
 
 class About:
     def __call__(self, request):
-        return '200 ok', render('about.html')
-
-
-class Contacts:
-    def __call__(self, request):
-        return '200 ok', render('contacts.html', data=request.get('data', None))
+        return '200 OK', render('about.html')
