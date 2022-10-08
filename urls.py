@@ -16,4 +16,3 @@ routes = {
     '/': Home(),
     '/about/': About(),
 }
-
